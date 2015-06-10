@@ -17,7 +17,7 @@ object MultipleParameterLists extends App {
   }
 
   functionWithMultipleParamLists("Hello", s => println(s.reverse))
-  
+
   functionWithMultipleParamListsV("Hello")(s => println(s.reverse))
 
   functionWithMultipleParamListsV("Hello") { s => println(s.reverse) }
