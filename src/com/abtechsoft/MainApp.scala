@@ -52,7 +52,6 @@ object MainApp extends App {
   val numbers = 1 to 100
   numbers.foreach {
     f =>
-
       val result = multipleOfNumbers.filter {
         case (key, fun) => fun(f)
       }.keys

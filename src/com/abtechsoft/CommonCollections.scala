@@ -1,3 +1,4 @@
+
 package com.abtechsoft
 
 /**
@@ -47,16 +48,16 @@ object CommonCollections extends App {
     l.toList
   }
 
-  def first[A](items: List[A], count: Int): List[A] = {
+  def firstA[A](items: List[A], count: Int): List[A] = {
     items.foldLeft[List[A]](Nil) { (a: List[A], i: A) =>
       if (a.size >= count) a else i :: a
     }.reverse
   }
 
-  def firstRecursion[A](items: List[A], count: Int): List[A] = {
-    if (count > 0 && items.tail != Nil) items.head :: first(items.tail, count - 1)
-    else Nil
-  }
+  /* def firstRecursion[A](items: List[A], count: Int): List[A] = {
+     if (count > 0 && items.tail != Nil) items.head :: first(items.tail, count - 1)
+     else Nil
+   }*/
 
   /**
    * Write a function that takes a list of strings and returns the longest string in the list.
