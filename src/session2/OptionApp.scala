@@ -6,11 +6,18 @@ package session2
 object OptionApp extends App {
   val name = null
 
-  name.toString
+  def objectToString(obj: Object) = println(obj.toString)
 
+  //objectToString(name)
   val absentGreeting: Option[String] = Option(null)
+  absentGreeting.getOrElse("Hello")
   //None
   val presentGreeting: Option[String] = Option("Hello!")
+
+  if(presentGreeting.isDefined){
+    objectToString(presentGreeting.get)
+  }
+  presentGreeting.foreach(f=>objectToString(f))
 
   case class User(
                    id: Int,
