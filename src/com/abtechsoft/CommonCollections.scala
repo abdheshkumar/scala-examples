@@ -11,7 +11,9 @@ package com.abtechsoft
  */
 object CommonCollections extends App {
   val forOdd = for (i <- 0L to 9L; j = i * 2 + 1) yield j
+
   val filterOdd = 0L to 20L filter (_ % 2 == 1)
+
   val mapOdd = 0L to 9L map (_ * 2 + 1)
 
   /**
