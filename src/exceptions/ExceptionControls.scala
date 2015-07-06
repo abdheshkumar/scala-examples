@@ -62,12 +62,12 @@ object ExceptionControls {
 
   catchSpecificExceptions(classOf[ArithmeticException]) {
     val list = List(1, 2, 3)
-    (list map (_ + 1) sum) / 2
+    (list.map(_ + 1).sum) / 2
   }
 
   catchSpecificExceptions(classOf[ArithmeticException]) {
     val list = List(1, 2, 3)
-    (list map (_ + 1) sum) / 0
+    (list.map(_ + 1).sum) / 0
   }
 
 
