@@ -1,4 +1,4 @@
-package session1
+package commons
 
 /**
  * Created by abdhesh on 6/11/15.

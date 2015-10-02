@@ -34,7 +34,7 @@ object FunctionsApp {
 
   // Creating Partial Functions
   val divide = (x: Int) => 42 / x
-  divide(0)
+  //divide(0)
 
   val divideSafe = new PartialFunction[Int, Int] {
     def apply(x: Int) = 42 / x
@@ -47,7 +47,7 @@ object FunctionsApp {
   val divide2: PartialFunction[Int, Int] = {
     case d: Int if d != 0 => 42 / d
   }
-  divide2.isDefinedAt(0)
+  //divide2.isDefinedAt(0)
   /*
   A partial function of type PartialFunction[A, B] is a unary function where the domain
 does not necessarily include all values of type A. The function isDefinedAt allows [you]
@@ -77,9 +77,9 @@ to test dynamically if a value is in the domain of the function.
   handle1to10(8)
 
 
-  List(0, 1, 2) map {
+  /*List(0, 1, 2) map {
     divide2
-  } //fail
+  } *///fail
 
   List(0, 1, 2) collect {
     divide2
@@ -98,4 +98,41 @@ to test dynamically if a value is in the domain of the function.
   }
 
   val numbers = sample map (isEven orElse isOdd)
+
+  // Add up the numbers in a list, up to 100 max
+  def max100Withreturn(ns: List[Int]): Int =
+    ns.foldLeft(0) { (n, m) =>
+      if (n + m > 100)
+        return 100
+      else
+        n + m
+    }
+
+  // Add up the numbers in a list, up to 100 max
+  def max100WithTailifElse(ns: List[Int]): Int = {
+    def go(ns: List[Int], a: Int): Int =
+      if (a >= 100) 100
+      else ns match {
+        case n :: ns => go(ns, n + a)
+        case Nil => a
+      }
+    go(ns, 0)
+  }
+
+  // Add up the numbers in a list, up to 100 max
+  def max100WithTailPattern(ns: List[Int]): Int = {
+
+    def go(ns: List[Int], a: Int): Int =
+      ns match {
+        case Nil => a
+        case ns if a >= 100 => 100
+        case n :: ns => go(ns, n + a)
+      }
+
+    go(ns, 0)
+  }
+
+  def main(args: Array[String]) = {
+    println(";:::::::::::" + max100WithTailPattern(1 to 50 toList))
+  }
 }

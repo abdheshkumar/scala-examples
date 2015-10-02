@@ -5,9 +5,13 @@ package looping
  */
 object LoopingApp {
   val a = Array("apple", "banana", "orange")
+
   for (e <- a) println(e)
+
   a.foreach(f => println(f))
+
   a.foreach { f => println(f) }
+
   a.foreach(println)
   //Returning values from a for loop
   val newArray = for (e <- a) yield e.toUpperCase

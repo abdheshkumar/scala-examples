@@ -26,24 +26,32 @@ object ExceptionControls {
     }
   }
 
-  def handleExceptionEither: Either[Int, Throwable] = {
+  def handleExceptionEither: Either[Throwable, Int] = {
     try {
-      Left(10 / 2)
+      Right(10 / 2)
     } catch {
-      case ex: Exception => Right(ex)
+      case ex: Exception => Left(ex)
+    }
+  }
+
+  def handleExceptionOption: Option[Int] = {
+    try {
+      Some(10 / 2)
+    } catch {
+      case ex: Exception => None
     }
   }
 
   import scala.util.control.Exception._
 
   val result1 = allCatch.opt(1.toInt)
-  val result2 = allCatch.opt("aa".toInt)
+  val result2 = allCatch.opt("a3a".toInt)
   val result3 = allCatch.toTry("a".toInt)
   val result4 = allCatch.either("a".toInt)
 
   val exceptions = Seq(classOf[ArithmeticException], classOf[NullPointerException])
 
-  catching(exceptions: _*).opt {
+  val as = catching(exceptions: _*).opt {
     1 / 0
   }
 

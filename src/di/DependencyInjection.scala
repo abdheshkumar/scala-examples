@@ -17,6 +17,32 @@ trait Config {
   def load: Unit
 }
 
+trait Animal {
+
+  def printName: Unit
+
+  def speech(animal: Animal) = animal.printName
+}
+
+class Dog(name: String) extends Animal {
+  override def printName: Unit = println(s"Dog:$name")
+}
+
+
+class Cat(name: String) extends Animal {
+  override def printName: Unit = println(s"Cat:$name")
+}
+
+
+object A extends App {
+
+  /*def speech(animal: Animal) = animal.printName
+
+  speech(new Dog("Dog"))
+  speech(new Cat("Cat"))*/
+
+}
+
 case class InMemoryConfig() extends Config {
   lazy val text = "Hello"
 

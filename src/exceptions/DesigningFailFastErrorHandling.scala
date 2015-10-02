@@ -18,7 +18,7 @@ object DesigningFailFastErrorHandling {
     }
   }
 
-  for {
+ val a = for {
     x <- Option(1)
     y <- Option.empty[Int]
     z <- Option(3)

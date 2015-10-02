@@ -50,8 +50,11 @@ object CommonCollections extends App {
     l.toList
   }
 
+  firstA(List(1, 2, 3,4,6,7), 2)
+
   def firstA[A](items: List[A], count: Int): List[A] = {
     items.foldLeft[List[A]](Nil) { (a: List[A], i: A) =>
+      println(":::::::::" + a.size)
       if (a.size >= count) a else i :: a
     }.reverse
   }
