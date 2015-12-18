@@ -24,6 +24,11 @@ class BasicIntQueue extends IntQueue {
   override def put(x: Int) = buff += x
 }
 
+/**
+ * When you call a method on a class with mixins, the method in
+ * the trait furthest to the right is called first. If that method
+ * calls super,it invokes the method in the next trait to its left, and so on.
+ */
 trait Doubling extends IntQueue {
   //Since super calls in a trait are dynamically bound, the super call in trait Doubling will work so long as the trait is mixed in after another trait or class that gives a concrete definition to the method.
   abstract override def put(x: Int) = super.put(x * 2)

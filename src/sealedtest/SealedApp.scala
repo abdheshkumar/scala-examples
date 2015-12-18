@@ -26,5 +26,7 @@ class Logger {
     case StringMessage(msg) => println(msg)
     case ExceptionMessage(exception: Error) => exception.printStackTrace()
     case ExceptionMessage(ex) => println(ex.toString)
+      //Warning:(25, 46) match may not be exhaustive.
+      //It would fail on the following input: BothMessage(_, _)
   }
 }
