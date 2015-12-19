@@ -62,7 +62,7 @@ object ExceptionExamples {
     throw new Exception
   } // Left(java.lang.Exception)
 
-  result match {
+  result8 match {
     case Left(t) => println("What's wrong?") // t: Throwable
     case Right(result) => println(result) // result: String
   }
