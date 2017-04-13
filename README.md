@@ -1,1 +1,1 @@
-# scala-questions
+# Scala code examples
