@@ -10,11 +10,10 @@ object OptionApp extends App {
 
   def objectToString(obj: Object) = println(obj.toString)
 
-  //objectToString(name)
-  val absentGreeting: Option[String] = Option(null)
+  //objectToString(name) // this will through NullPointerException
+  val absentGreeting: Option[String] = Option(null) //return None
 
-  absentGreeting.getOrElse("Hello")
-  //None
+  absentGreeting.getOrElse("Hello") //Use of getOrElse
 
 
 }

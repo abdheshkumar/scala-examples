@@ -1,9 +1,9 @@
-package session5
+package operator
 
 /**
  * Created by abdhesh on 6/11/15.
  */
-object Main extends App {
+object OperatorMain extends App {
   List(1, 2, 3, 4) map (_ + 10) filter (_ % 2 == 0) map (_ * 3)
   false && {
     println("!!");

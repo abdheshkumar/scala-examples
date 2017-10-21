@@ -3,7 +3,7 @@ package stringinterpolation
 /**
  * Created by abdhesh on 6/11/15.
  */
-object Main extends App {
+object StringInterpolationMain extends App {
   val name = "Jakson"
   val age = 33
   val weight = 200.00

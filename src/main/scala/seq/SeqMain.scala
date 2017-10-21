@@ -1,11 +1,11 @@
-package session6
+package seq
 
 import scala.collection.immutable.LinearSeq
 
 /**
  * Created by abdhesh on 6/11/15.
  */
-object Main extends App {
+object SeqMain extends App {
   val seq = Seq(1, 2, 3)
   val set = Set(1, 2, 3)
   val map = Map(1 -> "a", 2 -> "b", 3 -> "c")
