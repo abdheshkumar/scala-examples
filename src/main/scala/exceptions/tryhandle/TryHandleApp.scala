@@ -7,6 +7,7 @@ import scala.util.Try
  */
 object TryHandleApp extends App {
 
+
   val resultRecover = Try("abc".toInt).recover {
     case e: NumberFormatException => 0
   }

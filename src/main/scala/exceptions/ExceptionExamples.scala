@@ -3,18 +3,121 @@ package exceptions
 import scala.util.control.Exception._
 
 /**
- * Created by abdhesh on 12/18/15.
- */
-object ExceptionExamples {
+  * Created by abdhesh on 12/18/15.
+  */
+object ExceptionExamples extends App {
 
-  val result = try {
+  val tryCatch = try {
+    //Code here that might raise an exception
     throw new Exception
   } catch {
-    case e =>
+    case ex: Exception =>
+    //Code here for handle an exception
   }
+
+  val tryMultipleCatch = try {
+    //Code here that might raise an exception
+    throw new Exception
+  } catch {
+    case ae: ArithmeticException =>
+    //Code here for handle an exception
+    case ex: Exception =>
+    //Code here for handle an exception
+  }
+
+  val tryMultipleCatchFinally = try {
+    //Code here that might raise an exception
+    throw new Exception
+  } catch {
+    case ae: ArithmeticException =>
+    //Code here for handle an ArithmeticException
+    case ex: Exception =>
+    //Code here for handle an Exception
+  } finally {
+    println(":::::")
+    //Code here, will always be execute whether an exception is thrown or not
+  }
+
+  val tryCatchWithValue: Int = try {
+    //Code here that might raise an exception
+    "NonNumericValue".toInt
+  } catch {
+    case ne: NumberFormatException => 0
+  }
+
+  import scala.util.{Failure, Success, Try}
+
+  val withTry = Try("1".toInt) // Success(1)
+  withTry match {
+    case Success(value) => println(value)
+    case Failure(ex) =>
+      //Code here for handle an exception
+      println(ex)
+  }
+
+  val tryWithRecover = Try("Non-Numeric-Value".toInt) match {
+    case Success(value) => value
+    case Failure(ex) => 0
+  }
+
+  val tryWithRecoverF = Try("Non-Numeric-Value".toInt).recover {
+    //Here you pattern match on type of an exception
+    case ne: NumberFormatException => 0
+    case ex: Exception => 0
+  }
+
+  def recoverWith(first: String, second: String): Try[Int] = {
+    //The code of recoverWith function will execute when `Try(first.toInt)` raise an exception
+    Try(first.toInt).recoverWith {
+      case ne: NumberFormatException => Try(second.toInt)
+    }
+  }
+
+  //Try's map,flatMap,fold etc
+  def inc(n: Int): Int = n + 1
+
+  val try1 = Try("abc".toInt)
+  val tResult = try1.map(f => inc(f)) // The function `inc` will execute when `Try("abc".toInt)` doesn't raise an exception
+
+
+  val withTryWithFailure = Try("abc".toInt) // Failure(Exception in thread "main" java.lang.NumberFormatException: For input string: "")
+
+  val withTryBody = Try {
+    //Code here might raise an exception
+  }
+
+  def compute(number: Int, divideBY: Int): Int = number / divideBY
+
+  val t1 = Try("123".toInt).map(n => compute(n, 2)) //Success(61)
+  val t2 = Try("123".toInt).map(n => compute(n, 0)) //Failure(java.lang.ArithmeticException: / by zero)
+  println(t2)
+
+  def computeWithTry(value: String): Try[Int] = Try(value.toInt)
+
+  val r1: Try[Int] = computeWithTry("123")
+  r1.fold(
+    ex => println(ex),
+    value => println(compute(value, 2))
+  )
+
+  computeWithTry("123").fold(
+    ex => println(s"Exception--${ex}"),
+    value => println(compute(value, 0))
+  ) // Exception--java.lang.ArithmeticException: / by zero
+
+  computeWithTry("abc").fold(
+    ex => println(ex),
+    value => println(compute(value, 2))
+  )
+
+  computeWithTry("123").map(n => compute(n, 2)) //Success(61)
+  computeWithTry("123").map(n => compute(n, 0)) //Failure(java.lang.ArithmeticException: / by zero)
+  computeWithTry("abc").map(n => compute(n, 2)) //Failure(java.lang.NumberFormatException: For input string: "abc")
+  //Good thing with this approach, you can use for-comprehension,map,flatMap,fold etc. functions
+
   ///////////////////////////////////////////
   val resultF = allCatch {
-    throw new Exception
+    "".toInt
   }
   //////////////////////////////////////////////
   allCatch withApply {
@@ -226,7 +329,7 @@ object ExceptionExamples {
   } {
     println("foo")
   }
-///////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////
   unwrapping(classOf[RuntimeException]) {
     throw new RuntimeException(new IllegalArgumentException)
   } // java.lang.IllegalArgumentException
