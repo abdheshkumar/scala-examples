@@ -116,10 +116,12 @@ object ExceptionExamples extends App {
   //Good thing with this approach, you can use for-comprehension,map,flatMap,fold etc. functions
 
   ///////////////////////////////////////////
+  //Exceptions are thrown as they are.
   val resultF = allCatch {
     "".toInt
   }
-  //////////////////////////////////////////////
+  //////////////////////////////////////////////#
+  //To catch and do something, we pass Throwable to withApply and pass a function to do something.
   allCatch withApply {
     (t: Throwable) => println("catched")
   } apply {
