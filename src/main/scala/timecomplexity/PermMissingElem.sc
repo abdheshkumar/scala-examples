@@ -1,5 +1,4 @@
 object PermMissingElem {
-
   // 100%
   def solution(A: Array[Int]): Int = {
     def findMissing(i: Int, L: List[Int]): Int = {
@@ -8,6 +7,13 @@ object PermMissingElem {
     }
     if (A.length == 0) 1
     else findMissing(0, A.toList.sorted)
+  }
+
+  def solutionNext(A: Array[Int]): Int = {
+    val N = (A.length + 1).toLong
+    val expectedSum = (N) * (N + 1) / 2
+    val actualSum = A.sum
+    (expectedSum - actualSum).toInt
   }
 
   solution(Array(2, 3, 1, 5))
@@ -45,5 +51,5 @@ object PermMissingElem {
   expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-    */
+ */
 }

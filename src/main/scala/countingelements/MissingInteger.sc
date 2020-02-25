@@ -10,6 +10,31 @@ object MissingInteger {
     findMissing(1, A.toList.filter(_ > 0).distinct.sorted)
   }
 
+  def solutionAnother(A: Array[Int]): Int = {
+    // First build set of integers that exist.
+    @scala.annotation.tailrec
+    def buildSet(index: Int, accum: Set[Int]): Set[Int] = { //Filter out zero
+      if (index >= A.length) accum
+      else {
+        val nextValue = A(index)
+        val nextAccum =
+          if (nextValue > 0) accum + nextValue
+          else accum
+        buildSet(index + 1, nextAccum)
+      }
+    }
+    val positiveValues = buildSet(0, Set.empty)
+
+    // Next find lowest number not in set.
+    @scala.annotation.tailrec
+    def findLowest(i: Int): Int = {
+      if (positiveValues contains i) findLowest(i + 1)
+      else i
+    }
+
+    findLowest(1)
+  }
+
   def solution1(a: Array[Int]): Int = {
     def inner(b: List[Int], c: Int): Int = {
       b match {

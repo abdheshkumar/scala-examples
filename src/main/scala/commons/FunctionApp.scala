@@ -22,7 +22,7 @@ object FunctionApp {
   //2
   val max = (x: Int, y: Int) => if (x < y) y else x
 
-  val anonfun2 = new Function2[Int, Int, Int] {
+  val anonfun2 = new ((Int, Int) => Int) {
     def apply(x: Int, y: Int): Int = if (x < y) y else x
   }
   assert(max(0, 1) == anonfun2(0, 1))

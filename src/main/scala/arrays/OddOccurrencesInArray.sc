@@ -1,31 +1,18 @@
 object OddOccurrencesInArray {
 
-  // 66 %
-  def solution(A: Array[Int]): Int = {
-    def getUnpaired(list: List[Int]): Int = {
-      val in = list.indexOf(list.head, 1)
-      if (in == -1) list.head
-      else getUnpaired((list.take(in) ::: list.takeRight(list.size - in - 1)).tail)
+  def solution(a: Array[Int]): Int = {
+    def inner(l: List[Int], duplicate: (Int, Map[Int, Int])): Int = {
+      l match {
+        case Nil =>
+          val (count, _) = duplicate
+          count
+        case head :: tail =>
+          val (count, result) = duplicate
+          if (result.contains(head)) inner(tail, (count + 1, result - head))
+          else inner(tail, (count, result + (head -> head)))
+      }
     }
-    getUnpaired(A.toList)
-  }
-
-  // 66 %
-  def solution2(A: Array[Int]): Int = {
-    def getUnpaired(list: List[Int]): Int = {
-      val occHead = list.count(_ == list.head)
-      if (occHead % 2 == 0) getUnpaired(list.filter(_ != list.head))
-      else list.head
-    }
-    getUnpaired(A.toList)
-  }
-
-  // 88%
-  def solution3(A: Array[Int]): Int = {
-    val ar: Array[Int] = Array.ofDim[Int](A.toList.max + 1)
-    for (i <- A.indices) ar(A(i)) = ar(A(i)) + 1
-    for (i <- ar.indices) if (ar(i) % 2 == 1) return i
-    -1
+    inner(a.toList, (0, Map.empty))
   }
 
   val ar1: Array[Int] = Array(2, 1, 2, 4, 1)
@@ -34,12 +21,6 @@ object OddOccurrencesInArray {
   solution(ar1)
   solution(ar2)
   solution(ar3)
-  solution3(ar1)
-  solution3(ar2)
-  solution3(ar3)
-  ar3
-    .groupBy(a=>a)
-    .find(_._2.size<=1)
 
   /*
   A non-empty zero-indexed array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.

@@ -14,6 +14,17 @@ object CyclicRotation {
     else rotateKStep(A.toList, K).toArray
   }
 
+  def solutionNext(A: Array[Int], K: Int): Array[Int] = {
+    val list = A.toList
+    val result =
+      if (list.isEmpty || K <= 0) list
+      else {
+        val (firstPart, secondPart) = list.splitAt(K - 1)
+        secondPart ++ firstPart
+      }
+    result.toArray
+  }
+
 }
 CyclicRotation.solution(Array(3, 8, 9, 7, 6), 3)
 
@@ -39,4 +50,4 @@ Assume that:
 N and K are integers within the range [0..100];
 each element of array A is an integer within the range [−1,000..1,000].
 In your solution, focus on correctness. The performance of your solution will not be the focus of the assessment.
- */
+   */

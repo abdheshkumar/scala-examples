@@ -26,11 +26,9 @@ object FrogRiverOne {
   }
 
   val ar1 = Array(1, 3, 1, 4, 2, 3, 5, 4)
-  val ar2 = Array(4,3,2,1,5,4,3,2,1,6)
+  val ar2 = Array(4, 3, 2, 1, 5, 4, 3, 2, 1, 6)
   solution(5, ar1)
   solution(6, ar2)
-
-
   /*
 
   A small frog wants to get to the other side of a river. The frog is currently located at position 0, and wants to get to position X. Leaves fall from a tree onto the surface of the river.
@@ -81,5 +79,5 @@ object FrogRiverOne {
   expected worst-case space complexity is O(X), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-    */
+ */
 }
