@@ -2,8 +2,8 @@ object FrogJmp {
 
   // 100%
   def solution(X: Int, Y: Int, D: Int): Int = {
-    val distance: Long = Y - X
-    val minimum = distance / D
+    val distance: Long = Y - X //0
+    val minimum = distance / D //0 / 30
     if (distance % D > 0) (minimum + 1).toInt
     else minimum.toInt
   }

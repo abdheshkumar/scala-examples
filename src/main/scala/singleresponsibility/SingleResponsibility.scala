@@ -57,7 +57,7 @@ object SingleResponsibility extends App {
 
 
 object StackableTraitsTest extends App {
-  val queue = new BasicIntQueue with Incrementing with Doubling
+  val queue = new BasicIntQueue with Incrementing with Doubling //Functions are stacked so it will double and increment
   queue.put(10)
   println(queue.get)
 }
