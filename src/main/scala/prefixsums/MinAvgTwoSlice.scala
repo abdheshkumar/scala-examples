@@ -1,4 +1,30 @@
 object MinAvgTwoSlice {
+  def solution(A: Array[Int]): Int = {
+
+    @scala.annotation.tailrec
+    def loop(index: Int, curMinIdx: Int, curMinAvg: Double): Int = {
+      if (index >= A.length - 1) curMinIdx
+      else {
+        val pairAvg = (A(index) + A(index + 1)).toDouble / 2
+
+        val minAtIdx = {
+          if (index >= A.length - 2) pairAvg
+          else {
+            val trioAvg = (2 * pairAvg + A(index + 2)).toDouble / 3
+            pairAvg min trioAvg
+          }
+        }
+
+        if (minAtIdx < curMinAvg) {
+          loop(index + 1, index, minAtIdx)
+        } else {
+          loop(index + 1, curMinIdx, curMinAvg)
+        }
+      }
+    }
+
+    loop(0, 0, Double.MaxValue)
+  }
   /*
   A non-empty zero-indexed array A consisting of N integers is given. A pair of integers (P, Q), such that 0 ≤ P < Q < N, is called a slice of array A (notice that the slice contains at least two elements). The average of a slice (P, Q) is the sum of A[P] + A[P + 1] + ... + A[Q] divided by the length of the slice. To be precise, the average equals (A[P] + A[P + 1] + ... + A[Q]) / (Q − P + 1).
 
@@ -45,5 +71,5 @@ object MinAvgTwoSlice {
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-   */
+ */
 }

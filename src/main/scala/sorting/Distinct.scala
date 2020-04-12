@@ -1,11 +1,12 @@
-object Distinct {
+object Distinct extends App {
 
   // 100%
   def solution(A: Array[Int]): Int = {
     A.toList.distinct.length
   }
 
-  solution(Array(2, 1, 1, 2, 3, 1))
+ println(solution(Array(2, 1, 1, 2, 3, 1)))
+  println(Array(2, 1, 1, 2, 3, 1,7).groupBy(identity).keys.size)
 
   /*
   Write a function

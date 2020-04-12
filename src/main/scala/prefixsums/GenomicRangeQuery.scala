@@ -1,4 +1,78 @@
-object GenomicRangeQuery {
+object GenomicRangeQuery extends App {
+
+  //100%
+  def solution(S: String, P: Array[Int], Q: Array[Int]): Array[Int] = {
+
+    def makePrefixCounts(check: Char): Array[Int] = {
+      @scala.annotation.tailrec
+      def go(check: Char,
+             index: Int,
+             accum: Array[Int],
+             last: Int): Array[Int] = {
+        if (index >= S.size) accum
+        else {
+          val nextValue =
+            if (S.charAt(index) == check) last + 1
+            else last
+          accum(index) = nextValue
+          go(check, index + 1, accum, nextValue)
+        }
+      }
+      go(check, 0, Array.fill(S.size)(0), 0)
+    }
+
+    val A = makePrefixCounts('A')
+    val C = makePrefixCounts('C')
+    val G = makePrefixCounts('G')
+    // Don't need counts for `T` because if it's none of the other 3, it must be `T`.
+
+    def hasInRange(a: Array[Int], p: Int, q: Int): Boolean = {
+      val atP = if (p == 0) 0 else a(p - 1)
+      val atQ = a(q)
+      (atQ - atP) > 0
+    }
+
+    val K = P.length
+    @scala.annotation.tailrec
+    def loop(index: Int, result: Array[Int]): Array[Int] = {
+      if (index >= K) result
+      else {
+        val p = P(index)
+        val q = Q(index)
+        val minValue =
+          if (hasInRange(A, p, q)) 1
+          else if (hasInRange(C, p, q)) 2
+          else if (hasInRange(G, p, q)) 3
+          else 4
+        result(index) = minValue
+        loop(index + 1, result)
+      }
+    }
+    loop(0, Array.fill(K)(0))
+  }
+
+  def solution1(S: String, P: Array[Int], Q: Array[Int]): Array[Int] = {
+    val size = S.size
+    val K = P.length
+    val m = Map('A' -> 1, 'C' -> 2, 'G' -> 3, 'T' -> 4)
+    def go(index: Int, result: List[Int]): List[Int] = {
+      if (index >= K) result
+      else {
+        val p = P(index)
+        val q = Q(index)
+        if (p <= q && p <= size && q <= size) {
+          val factor = S.substring(p, q + 1).toSet.map(m(_)).min
+          go(index + 1, result :+ factor)
+        } else sys.error("Out of range")
+      }
+    }
+    go(0, List.empty).toArray
+  }
+  val S = "CAGCCTA"
+  val P = Array(2, 5, 0)
+  val Q = Array(4, 5, 6)
+  println(solution(S, P, Q).toList)
+  println(solution1(S, P, Q).toList)
 
   /*
   A DNA sequence can be represented as a string consisting of the letters A, C, G and T, which correspond to the types of successive nucleotides in the sequence. Each nucleotide has an impact factor, which is an integer. Nucleotides of types A, C, G and T have impact factors of 1, 2, 3 and 4, respectively. You are going to answer several queries of the form: What is the minimal impact factor of nucleotides contained in a particular part of the given DNA sequence?
@@ -46,5 +120,5 @@ object GenomicRangeQuery {
   expected worst-case time complexity is O(N+M);
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
-   */
+ */
 }

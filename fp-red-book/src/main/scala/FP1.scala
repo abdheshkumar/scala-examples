@@ -28,7 +28,7 @@ object FP1 extends App {
     }
 
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
-    case head :: tail if (f(head)) => dropWhile(tail, f)
+    case head :: tail if f(head) => dropWhile(tail, f)
     case _ => l
   }
 

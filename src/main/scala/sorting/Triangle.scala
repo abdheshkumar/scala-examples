@@ -1,4 +1,4 @@
-object Triangle {
+object Triangle extends App {
 
   // 93%
   def solution(A: Array[Int]): Int = {
@@ -7,17 +7,41 @@ object Triangle {
     0
   }
 
+  //100%
+  def solution1(A: Array[Int]): Int = {
+    scala.util.Sorting.quickSort(A)
+    @scala.annotation.tailrec
+    def loop(idx: Int): Int = {
+      if (idx >= A.length - 2) 0
+      else if (A(idx) <= 0) loop(idx + 1)
+      else {
+        val currentTrio = (A(idx) + A(idx + 1)) - A(idx + 2)
+        if (currentTrio > 0) 1
+        else loop(idx + 1)
+      }
+    }
+    loop(0)
+  }
+
   val ar1 = Array(10, 2, 5, 1, 8, 20)
   val ar2 = Array(10, 50, 5, 1)
   val ar3 = Array[Int]()
   val ar4 = Array(1, 1, 1)
   val ar5 = Array(2, 3)
 
-  solution(ar1)
-  solution(ar2)
-  solution(ar3)
-  solution(ar4)
-  solution(ar5)
+  println(solution(ar1))
+  println(solution(ar2))
+  println(solution(ar3))
+  println(solution(ar4))
+  println(solution(ar5))
+
+  println("*****")
+
+  println(solution1(ar1))
+  println(solution1(ar2))
+  println(solution1(ar3))
+  println(solution1(ar4))
+  println(solution1(ar5))
 
   /*
 
@@ -57,5 +81,5 @@ object Triangle {
   expected worst-case time complexity is O(N*log(N));
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
-   */
+ */
 }

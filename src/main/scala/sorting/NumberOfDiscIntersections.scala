@@ -1,5 +1,45 @@
 object NumberOfDiscIntersections {
+  def solution(A: Array[Int]): Int = {
+    case class DiskBorder(location: Long, isOpen: Boolean)
 
+    val borders = Array.fill[DiskBorder](A.length * 2)(null)
+    @scala.annotation.tailrec
+    def fill(idx: Int): Unit = {
+      if (idx < A.length) {
+        val radius = A(idx).toLong
+        val open = DiskBorder(idx.toLong - radius, true)
+        borders(2 * idx) = open
+        val close = DiskBorder(idx.toLong + radius, false)
+        borders(2 * idx + 1) = close
+        fill(idx + 1)
+      }
+    }
+
+    fill(0)
+
+    val f: DiskBorder => (Long, Int) = {
+      case DiskBorder(location, isOpen) =>
+        val openFirst = if (isOpen) 0 else 1
+        (location, openFirst)
+    }
+
+    scala.util.Sorting.stableSort(borders, f)
+
+    @scala.annotation.tailrec
+    def go(idx: Int, currentlyOpen: Int, accum: Int): Int = {
+      if (accum > 10000000) -1
+      else if (idx >= borders.length) accum
+      else {
+        if (borders(idx).isOpen) {
+          go(idx + 1, currentlyOpen + 1, accum + currentlyOpen)
+        } else {
+          go(idx + 1, currentlyOpen - 1, accum)
+        }
+      }
+    }
+
+    go(0, 0, 0)
+  }
   /*
   We draw N discs on a plane. The discs are numbered from 0 to N − 1. A zero-indexed array A of N non-negative integers, specifying the radiuses of the discs, is given. The J-th disc is drawn with its center at (J, 0) and radius A[J].
 
@@ -38,5 +78,5 @@ object NumberOfDiscIntersections {
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-   */
+ */
 }

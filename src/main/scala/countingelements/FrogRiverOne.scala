@@ -1,4 +1,4 @@
-object FrogRiverOne {
+object FrogRiverOne extends App {
 
   // 100%
   def solution(X: Int, A: Array[Int]): Int = {
@@ -25,12 +25,25 @@ object FrogRiverOne {
     findTime(0, A.toList)
   }
 
+  def solution1(X: Int, A: Array[Int]): Int = {
+    import scala.collection.BitSet
+    @scala.annotation.tailrec
+    def go(index: Int, bitSet: BitSet): Int = {
+      if (index >= A.length) -1
+      else {
+        val nextValue = A(index)
+        val newBitSet = bitSet + nextValue
+        if (newBitSet.size == X) index
+        else go(index + 1, newBitSet)
+      }
+    }
+    go(0, BitSet.empty)
+  }
+
   val ar1 = Array(1, 3, 1, 4, 2, 3, 5, 4)
-  val ar2 = Array(4,3,2,1,5,4,3,2,1,6)
-  solution(5, ar1)
-  solution(6, ar2)
-
-
+  val ar2 = Array(4, 3, 2, 1, 5, 4, 3, 2, 1, 6)
+  println(solution1(5, ar1))
+  println(solution1(6, ar2))
   /*
 
   A small frog wants to get to the other side of a river. The frog is currently located at position 0, and wants to get to position X. Leaves fall from a tree onto the surface of the river.
@@ -72,7 +85,7 @@ object FrogRiverOne {
   the function should return 6, as explained above.
 
     Assume that:
-
+FrogRiverOne
     N and X are integers within the range [1..100,000];
   each element of array A is an integer within the range [1..X].
   Complexity:
@@ -81,5 +94,5 @@ object FrogRiverOne {
   expected worst-case space complexity is O(X), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-    */
+ */
 }

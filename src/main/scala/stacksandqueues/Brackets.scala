@@ -1,26 +1,39 @@
-object Brackets {
+object Brackets extends App {
 
-  // 100&
+  // 100%
   def solution(S: String): Int = {
-    var list = List[Char]()
-    for (i <- S.indices) {
-      S(i) match {
-        case '{' | '[' | '(' => list = S(i) :: list
-        case '}' =>
-          if (list.isEmpty) return 0
-          if (list.head == '{') list = list.tail
 
-        case ']' =>
-          if (list.isEmpty) return 0
-          if (list.head == '[') list = list.tail
+    def go(i: Int, list: List[Char]): Int = {
+      if (i >= S.length) {
+        if (list.nonEmpty) 0 else 1
+      } else {
+        S(i) match {
+          case '{' | '[' | '(' => go(i + 1, S(i) :: list)
+          case '}' =>
+            list match {
+              case Nil                         => 0
+              case head :: tail if head == '{' => go(i + 1, tail)
+              case _                           => go(i + 1, list)
+            }
 
-        case ')' =>
-          if (list.isEmpty) return 0
-          if (list.head == '(') list = list.tail
+          case ']' =>
+            list match {
+              case Nil                         => 0
+              case head :: tail if head == '[' => go(i + 1, tail)
+              case _                           => go(i + 1, list)
+            }
 
+          case ')' =>
+            list match {
+              case Nil                         => 0
+              case head :: tail if head == '(' => go(i + 1, tail)
+              case _                           => go(i + 1, list)
+            }
+
+        }
       }
     }
-    if (list.isEmpty) 1 else 0
+    go(0, List.empty)
   }
 
   // 62% (correct but bad performance)
@@ -34,27 +47,23 @@ object Brackets {
       }
 
       if (i == S.length) L
-      else S(i) match {
-        case '{' | '[' | '(' => examine(i + 1, S(i) :: L)
-        case '}' => check('{')
-        case ']' => check('[')
-        case ')' => check('(')
-      }
+      else
+        S(i) match {
+          case '{' | '[' | '(' => examine(i + 1, S(i) :: L)
+          case '}'             => check('{')
+          case ']'             => check('[')
+          case ')'             => check('(')
+        }
     }
     if (examine(0, List[Char]()).nonEmpty) 0 else 1
   }
 
   val goodString = "{[()()]}"
   val badString = "([)()]"
-  val badderString = ")[][()]}"
-  solution(goodString)
-  solution(badString)
-  solution(badderString)
-  solutionR(goodString)
-  solutionR(badString)
-  solutionR(badderString)
-
-
+  val badderString = ")[][()]}rerer090][][][][][][][][][]["
+  println(solution(goodString))
+  println(solution(badString))
+  println(solution(badderString))
   /*
 
   A string S consisting of N characters is considered to be properly nested if any of the following conditions is true:
@@ -80,5 +89,5 @@ object Brackets {
 
     expected worst-case time complexity is O(N);
   expected worst-case space complexity is O(N) (not counting the storage required for input arguments).
-  */
+ */
 }

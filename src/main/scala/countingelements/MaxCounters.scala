@@ -1,6 +1,6 @@
 import MaxCounters.{ops, solution}
 
-object MaxCounters {
+object MaxCounters extends App {
 
   // 88%
   def solution(N: Int, A: Array[Int]): Array[Int] = {
@@ -18,7 +18,7 @@ object MaxCounters {
       else {
         ops.head match {
           case x: Int if x >= 1 && x <= N => increaseCounter(x)
-          case x: Int if x > N => maxCounters()
+          case x: Int if x > N            => maxCounters()
         }
         getCounters(ops.tail)
       }
@@ -27,11 +27,43 @@ object MaxCounters {
     getCounters(A.toList)
   }
 
-  val ops = Array(3, 4, 4, 6, 1, 4, 4)
-}
-solution(5, ops)
+  def solution1(N: Int, A: Array[Int]): Array[Int] = {
+    @scala.annotation.tailrec
+    def loop(index: Int, counters: Map[Int, Int], curMax: Int, floor: Int): Array[Int] = {
+      if (index >= A.length) {
+        val result = Array.fill(N)(0)
+        (1 to N) foreach { counter =>
+          val counterValue = counters.getOrElse(counter, 0) + floor
+          result(counter - 1) = counterValue
+        }
+        result
+      } else {
+        val currentValue = A(index)
+        if (currentValue >= 1 && currentValue <=N) {
+          val nextCounterValue = counters.getOrElse(currentValue, 0) + 1 //Increase by 1
+          val nextMax = curMax max nextCounterValue
+          val nextCounters = counters + (currentValue -> nextCounterValue)
+          println(s"Next: ${nextCounters}")
+          loop(index + 1, nextCounters, nextMax, floor)
+        } else if (currentValue == (N + 1)) {
+          val nextFloor = floor + curMax // set max counter
+          println(counters,nextFloor,currentValue)
+          loop(index + 1, Map.empty, 0, nextFloor)
+        } else {
+          sys.error("Unexpected input")
+        }
+      }
+    }
 
-  /*
+    loop(0, Map.empty, 0, 0)
+  }
+
+
+
+  val ops = Array(3, 4, 4, 6, 1, 4, 4)
+  println(solution1(5, ops).toList)
+}
+/*
 
   You are given N counters, initially set to 0, and you have two possible operations on them:
 
@@ -94,4 +126,4 @@ solution(5, ops)
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-    */
+ */

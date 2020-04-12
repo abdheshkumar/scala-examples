@@ -1,9 +1,18 @@
-object PassingCars {
+object PassingCars extends App {
 
   def solution(A: Array[Int]): Int = {
+    @scala.annotation.tailrec
+    def go(index: Int, numEast: Int, accum: Int): Int = {
+      if (accum > 1000000000) -1
+      else if (index >= A.length) accum
+      else if (A(index) == 0) go(index + 1, numEast + 1, accum)
+      else go(index + 1, numEast, accum + numEast)
+    }
 
-    1
+    go(0, 0, 0)
   }
+
+  println(solution(Array(0, 1, 0, 1, 1)))
 
   /*
   A non-empty zero-indexed array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.
@@ -50,5 +59,5 @@ object PassingCars {
   expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-   */
+ */
 }

@@ -8,6 +8,11 @@ object FrogJmp {
     else minimum.toInt
   }
 
+  // 100%
+  def solution2(X: Int, Y: Int, D: Int): Int = {
+    math.ceil((Y - X).toDouble / D).toInt
+  }
+
   solution(10, 85, 30)
   solution(10, 10, 20)
   solution(10, 50, 10)

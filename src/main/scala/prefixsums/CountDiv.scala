@@ -1,4 +1,4 @@
-object CountDiv {
+object CountDiv extends App {
   def solution(A: Int, B: Int, K: Int): Int = (B - A + 1) / K
 
   //
@@ -16,7 +16,7 @@ object CountDiv {
   def solution3(A: Int, B: Int, K: Int): Int = {
     var t = A
     val remainderA = t % K
-    if (remainderA==0) t = t + (K - remainderA)
+    if (remainderA == 0) t = t + (K - remainderA)
     if (t > B) return 0
     ((B - t) / K) + 1
   }
@@ -27,12 +27,19 @@ object CountDiv {
     (B / K) - (A / K) + offsetForLeftRange
   }
 
-  solution4(6, 11, 2)
-  solution(11, 19, 4)
-  solution(35, 37, 2)
-  solution(12, 26, 3)
-  solution2(0, 11, 1) // wrong should be 11
-  solution(3444, 2000000000, 1234586)
+  def solution5(A: Int, B: Int, K: Int): Int = {
+    // smallest number >= A that's divisble by K
+    val minDiv = math.ceil(A.toDouble / K).toInt * K
+    if (minDiv > B) 0
+    else (B - minDiv) / K + 1
+  }
+
+  //println(solution5(6, 11, 2))
+  println(solution(11, 19, 4))
+  println(solution(35, 37, 2))
+  println(solution(12, 26, 3))
+  println(solution5(0, 11, 1)) // wrong should be 11
+  println(solution(3444, 2000000000, 1234586))
 
   0 % 1
 
@@ -69,5 +76,5 @@ object CountDiv {
 
   expected worst-case time complexity is O(1);
   expected worst-case space complexity is O(1).
-   */
+ */
 }

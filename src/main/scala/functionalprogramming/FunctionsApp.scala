@@ -1,5 +1,5 @@
 package functionalprogramming
-
+import scala.language.postfixOps
 /**
  * Created by abdhesh on 6/25/15.
  */

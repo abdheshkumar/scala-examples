@@ -1,4 +1,5 @@
-object PermCheck {
+import java.util.BitSet
+object PermCheck extends App {
 
   // 100%
   def solution(A: Array[Int]): Int = {
@@ -14,11 +15,59 @@ object PermCheck {
     else isPerm(list)
   }
 
-  solution(Array(4, 1, 3, 2))
-  solution(Array(4, 1, 3))
-  solution(Array(5,3,2,1,4))
+  def solution1(A: Array[Int]): Int = {
+    val bitz = new BitSet(A.size + 1) //We could use SortedSet here
 
+    val good = A.foldLeft(true)(
+      (current, i) =>
+        if (current) {
 
+          (i, bitz.get(i)) match {
+            case (x, _) if x > A.size =>
+              println("Mathc-")
+              false
+
+            case (x, _) if x < 1 || x > 1000000000 =>
+              false
+
+            case (0, _) =>
+              false
+
+            case (_, true) =>
+              false
+
+            case _ =>
+              bitz.set(i)
+              println(i)
+              true
+          }
+
+        } else false
+    )
+
+    if (good && A.size > 0 && A.size <= 100000) 1
+    else 0
+  }
+
+  def solution2(A: Array[Int]): Int = {
+    import scala.collection.BitSet
+
+    @scala.annotation.tailrec
+    def go(index: Int, remaining: BitSet): Int = {
+      if (index >= A.length) {
+        if (remaining.isEmpty) 1 else 0
+      } else {
+        val currentValue = A(index)
+        if (!remaining.contains(currentValue)) 0
+        else go(index + 1, remaining - currentValue)
+      }
+    }
+
+    go(0, BitSet(1 to A.length: _*))
+  }
+  //println(solution1(Array(4, 1, 3, 2)))
+  println(solution2(Array(4, 1, 3)))
+  //println(solution(Array(5, 3, 2, 1, 4)))
   /*
 
   A non-empty zero-indexed array A consisting of N integers is given.
@@ -71,5 +120,5 @@ object PermCheck {
   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-   */
+ */
 }

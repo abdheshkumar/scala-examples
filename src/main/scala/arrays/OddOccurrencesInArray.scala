@@ -1,13 +1,26 @@
-object OddOccurrencesInArray {
+object OddOccurrencesInArray extends App {
 
   // 66 %
   def solution(A: Array[Int]): Int = {
     def getUnpaired(list: List[Int]): Int = {
       val in = list.indexOf(list.head, 1)
       if (in == -1) list.head
-      else getUnpaired((list.take(in) ::: list.takeRight(list.size - in - 1)).tail)
+      else
+        getUnpaired((list.take(in) ::: list.takeRight(list.size - in - 1)).tail)
     }
     getUnpaired(A.toList)
+  }
+//100%
+  def solution4(A: Array[Int]): Int = {
+    val N = A.size
+
+    if (N < 1 || N > 1000000) sys.error(s"Invalid array size: $N")
+
+    A.foldLeft(0) { (current, i) =>
+      val r = i ^ current
+      println(r)
+      r
+    }
   }
 
   // 66 %
@@ -31,15 +44,18 @@ object OddOccurrencesInArray {
   val ar1: Array[Int] = Array(2, 1, 2, 4, 1)
   val ar2: Array[Int] = Array(1, 2, 2, 2, 2, 2, 2)
   val ar3: Array[Int] = Array(2, 2, 2, 2, 2, 2, 3)
-  solution(ar1)
+  println(solution4(ar1))
   solution(ar2)
   solution(ar3)
   solution3(ar1)
   solution3(ar2)
   solution3(ar3)
-  ar3
-    .groupBy(a=>a)
-    .find(_._2.size<=1)
+  println(
+    ar1
+      .groupBy(a => a)
+      .find(_._2.size <= 1)
+      .toList
+  )
 
   /*
   A non-empty zero-indexed array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.

@@ -1,4 +1,4 @@
-object Fish {
+object Fish extends App {
 
   def solution(A: Array[Int], B: Array[Int]): Int = {
     var survivors = 0

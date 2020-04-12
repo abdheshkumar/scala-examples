@@ -1,5 +1,40 @@
-object Nesting {
+object Nesting extends App {
 
+  //100%
+  def solution2(S: String): Int = {
+    val results = S.foldLeft(0) { (total, chr) =>
+      if (total < 0) total
+      else {
+        chr match {
+          case '(' => total + 1
+          case ')' => total - 1
+          case _   => total
+        }
+      }
+    }
+
+    if (results == 0) 1
+    else 0
+  }
+
+  // 100%
+  def solution1(S: String): Int = {
+    @scala.annotation.tailrec
+    def loop(idx: Int, numOpen: Int): Boolean = {
+      if (idx >= S.size) numOpen == 0
+      else {
+        val c = S.charAt(idx)
+        if (c == '(') {
+          loop(idx + 1, numOpen + 1)
+        } else if (c == ')') {
+          if (numOpen == 0) false
+          else loop(idx + 1, numOpen - 1)
+        } else { loop(idx + 1, numOpen) }
+      }
+    }
+
+    if (loop(0, 0)) 1 else 0
+  }
   // 100%
   def solution(S: String): Int = {
     var list = List[Char]()
@@ -44,5 +79,5 @@ object Nesting {
 
     expected worst-case time complexity is O(N);
   expected worst-case space complexity is O(1) (not counting the storage required for input arguments).
-  */
+ */
 }

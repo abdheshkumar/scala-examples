@@ -1,18 +1,46 @@
-object CountFactors {
-  val N = 16
-  var factorsCount = 0
+object CountFactors extends App {
+  //78%
+  def solution(N: Int): Int = {
+    if (N < 1) sys.error(s"Invalid input: $N")
 
-  for (i <- 1 to math.sqrt(N).toInt) {
-    if (N % i == 0) {
-      println(i)
-      factorsCount += 1
+    @scala.annotation.tailrec
+    def foo(i: Int, total: Int): Int = {
+      if (i > N) total
+      else if (N % i == 0) {
+        println(i)
+        foo(i + 1, total + 1)
+      }
+      else foo(i + 1, total)
     }
+
+    foo(i = 1, total = 0)
   }
-  factorsCount *= 2
 
-  if (N % math.sqrt(N) == 0) factorsCount -= 1
-  factorsCount
+  //92%
+  def solution3(N: Int): Int = {
+    if (N < 1) sys.error(s"Invalid input: $N")
 
+    @scala.annotation.tailrec
+    def foo(i: Int, total: Int): (Int, Int) = {
+      if ((i * i) >= N) (total, i)
+      else if (N % i == 0) foo(i + 1, total + 2)
+      else foo(i + 1, total)
+    }
+
+    val (results, x) = foo( 1, total = 0)
+
+    if (x * x == N) results + 1
+    else results
+  }
+
+  def solution1(N: Int): Int = {
+    val root = math.sqrt(N)
+    val factorsCount = (1 to root.toInt).filter(N % _ == 0).length
+    val total = factorsCount * 2
+    if (N % root == 0) total - 1
+    else total
+  }
+  println("Result" + solution(24), 25 % math.sqrt(25))
   /*def solution(N: Int): Int = {
     var i = 1
     var result = 0
@@ -52,5 +80,5 @@ object CountFactors {
   expected worst-case time complexity is O(sqrt(N));
   expected worst-case space complexity is O(1).
 
-   */
+ */
 }

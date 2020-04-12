@@ -1,4 +1,4 @@
-object PermMissingElem {
+object PermMissingElem extends App {
 
   // 100%
   def solution(A: Array[Int]): Int = {
@@ -10,10 +10,17 @@ object PermMissingElem {
     else findMissing(0, A.toList.sorted)
   }
 
-  solution(Array(2, 3, 1, 5))
-  solution(Array())
-  solution(Array(1))
-  solution(Array(4, 5, 3, 1))
+  def solution2(A: Array[Int]): Int = {
+    val N = (A.length + 1).toLong
+    val expectedSum = (N) * (N + 1) / 2
+    val actualSum = A.view.sum
+    (expectedSum - actualSum).toInt
+  }
+
+  println(solution2(Array(2, 3, 1, 5)))
+  println(solution2(Array()))
+  println(solution2(Array(1)))
+  println(solution2(Array(4, 5, 3, 1)))
 
   /*
   A zero-indexed array A consisting of N different integers is given. The array contains integers in the range [1..(N + 1)], which means that exactly one element is missing.
@@ -45,5 +52,5 @@ object PermMissingElem {
   expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-    */
+ */
 }

@@ -1,40 +1,22 @@
-object MaxProductOfThree {
-
-  // 44%
-  def brutalSolution(A: Array[Int]): Int = {
-    var max = A(0) * A(1) * A(2)
-    for {
-      p <- 0 to A.length - 3
-      q <- p + 1 to A.length - 2
-      r <- q + 1 until A.length
-    } {
-      val prod = A(p) * A(q) * A(r)
-      if (prod > max) max = prod
-    }
-    max
-  }
-
+object MaxProductOfThree extends App {
   // 100%
-  def betterSolution(A: Array[Int]): Int = {
+  def solution(A: Array[Int]): Int = {
     val sortedA = A.toList.sorted.toArray
     val len = A.length
     val maxP = sortedA(len - 1) * sortedA(len - 2) * sortedA(len - 3)
+    // Two large negative numbers
     val maxN = sortedA(0) * sortedA(1) * sortedA(len - 1)
     Math.max(maxN, maxP)
-  }
-
-  def test(a: Array[Int]) = {
-    (brutalSolution(a), betterSolution(a))
   }
 
   val ar1 = Array(-3, 1, 2, -2, 5, 6)
   val ar2 = Array(0, 0, 0)
   val ar3 = Array(3, 5, 7, 9, 10, -12, -25)
   val ar4 = Array(-3, -20, -1, -6, -90, -12, -12)
-  test(ar1)
-  test(ar2)
-  test(ar3)
-  test(ar4)
+  solution(ar1)
+  solution(ar2)
+  solution(ar3)
+  solution(ar4)
 
   /*
   A non-empty zero-indexed array A consisting of N integers is given. The product of triplet (P, Q, R) equates to A[P] * A[Q] * A[R] (0 ≤ P < Q < R < N).
@@ -80,5 +62,5 @@ object MaxProductOfThree {
   expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
 
-   */
+ */
 }

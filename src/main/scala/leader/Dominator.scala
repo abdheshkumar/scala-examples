@@ -1,4 +1,23 @@
-object Dominator {
+object Dominator extends App {
+
+  def solution1(A: Array[Int]): Int = {
+    val length = A.length
+    val half = length / 2
+    def go(index: Int, m: Map[Int, (List[Int], Int)]): Int = {
+      if (index >= length)
+        m.find(_._2._2 > half).map(_._2._1.head).getOrElse(-1)
+      else {
+        val k = A(index)
+        m.get(k) match {
+          case Some((value, count)) =>
+            if (count > half) value.head
+            else go(index + 1, m + (k -> ((index +: value) -> (count + 1))))
+          case None => go(index + 1, m + (k -> (List(index), 1)))
+        }
+      }
+    }
+    go(0, Map.empty)
+  }
 
   // 91% (copied from the codility website)
   def solution(A: Array[Int]): Int = {
@@ -21,8 +40,12 @@ object Dominator {
     A.indexOf(leader)
   }
 
-  val ar1 = Array(3, 2, 3, 4, 3, 3, 3, -1)
-  solution(ar1)
+  val ar1 = Array(3, 4, 3, 2, 3, -1, 3, 3) //3, 4, 3, 2, 3, -1, 3, 3
+  val s = System.currentTimeMillis()
+  val resul = solution1(Array.fill(100000)(1))
+  val e = System.currentTimeMillis()
+
+  println(resul /*, solution(Array(2, 1, 1, 3))*/, (e - s))
 
   /*
   A zero-indexed array A consisting of N integers is given. The dominator of array A is the value that occurs in more than half of the elements of A.
@@ -56,5 +79,5 @@ object Dominator {
   expected worst-case time complexity is O(N);
   expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
   Elements of input arrays can be modified.
-   */
+ */
 }
