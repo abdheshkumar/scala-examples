@@ -7,5 +7,6 @@ lazy val `fp-red-book` = (project in file("fp-red-book")).
 lazy val root = (project in file(".")).
   settings(
     name := "scala-examples",
-    scalaVersion := "2.13.1"
+    scalaVersion := "2.13.1",
+    libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.5"
   )

@@ -23,9 +23,10 @@ public class PhotoArrangement {
                 "g.jpg, Warsaw, 2016-02-29 22:13:11";
 
         long s = System.currentTimeMillis();
-        System.out.println(solution(input));
+        String output = solution(input);
         long e = System.currentTimeMillis();
         System.out.println(e - s);
+        System.out.println(output);
 
     }
 
