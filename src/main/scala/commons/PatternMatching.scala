@@ -20,7 +20,7 @@ object PatternMatching {
       case i: Int => println("Integer: " + i)
       case s: String => println("String: " + s)
       case f: Double => println("Double: " + f)
-      case other => println("other: " + other)
+      case other => println("other datatype: " + other)
     }
   }
 
