@@ -21,4 +21,4 @@ jobs:
     - name: Run tests
       run: sbt -mem 4096 "test"
     - name: Run tests
-      run: sbt -mem 4096 "dist"
+      run: sbt -mem 4096 dist
