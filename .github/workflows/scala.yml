@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: amazonlinux2-x86_64-standard:3.0
 
     steps:
     - uses: actions/checkout@v2
