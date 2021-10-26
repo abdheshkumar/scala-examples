@@ -19,4 +19,6 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Run tests
-      run: sbt test
+      run: sbt -mem 4096 "test"
+    - name: Run tests
+      run: sbt -mem 4096 "dist"
